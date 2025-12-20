@@ -116,33 +116,68 @@
       <!-- FORMS -->
       <div class="contact-form-area">
 
-        <!-- NEWSLETTER -->
-        
-<h3>NEWSLETTER</h3>
-<p>Subscribe for exclusive drops and early access.</p>
-<form class="newsletter-form" action="https://formspree.io/f/mlgrjvdz" method="POST">
-  <div class="newsletter-input-group">
-    <input type="email" name="email" placeholder="YOUR EMAIL" required>
-    <button type="submit">JOIN</button>
-  </div>
-  <input type="hidden" name="type" value="Newsletter Signup">
-</form>
-
-
-
-        <!-- MESSAGE FORM -->
-        <form class="message-form" action="https://formspree.io/f/mlgrjvdz" method="POST">
-          <input type="text" name="name" placeholder="Full Name" required>
-          <input type="email" name="email" placeholder="Email Address" required>
-          <textarea name="message" placeholder="Message / Order Inquiry" required></textarea>
-          <input type="hidden" name="source" value="NXT WAVE Website">
-          <button type="submit">SEND MESSAGE</button>
-        </form>
-
-      </div>
-
+    <!-- NEWSLETTER -->
+<div class="contact-form-area">
+  <h3>NEWSLETTER</h3>
+  <p>Subscribe for exclusive drops and early access.</p>
+  <form id="newsletter-form" action="https://formspree.io/f/mlgrjvdz" method="POST">
+    <div class="newsletter-input-group">
+      <input type="email" name="email" placeholder="YOUR EMAIL" required>
+      <button type="submit">JOIN</button>
     </div>
-  </section>
+  </form>
+  <p id="newsletter-msg" class="form-msg"></p>
+</div>
+
+<!-- CONTACT FORM -->
+<div class="contact-form-area">
+  <h3>CONTACT NXT WAVE</h3>
+  <form id="contact-form" action="https://formspree.io/f/mlgrjvdz" method="POST">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <textarea name="message" placeholder="Message / Order Inquiry" required></textarea>
+    <input type="hidden" name="source" value="NXT WAVE Website">
+    <button type="submit">SEND MESSAGE</button>
+  </form>
+  <p id="contact-msg" class="form-msg"></p>
+</div>
+
+<!-- AJAX SCRIPT -->
+<script>
+  async function handleFormSubmit(formId, msgId) {
+    const form = document.getElementById(formId);
+    const msg = document.getElementById(msgId);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          msg.textContent = "Sent!";
+          msg.style.color = "#ff4c4c";
+          form.reset();
+        } else {
+          msg.textContent = "Error sending message!";
+          msg.style.color = "#ff4c4c";
+        }
+      } catch (error) {
+        msg.textContent = "Error sending message!";
+        msg.style.color = "#ff4c4c";
+      }
+    });
+  }
+
+  handleFormSubmit('newsletter-form', 'newsletter-msg');
+  handleFormSubmit('contact-form', 'contact-msg');
+</script>
+
 
   <!-- JS -->
   <script src="script.js"></script>
